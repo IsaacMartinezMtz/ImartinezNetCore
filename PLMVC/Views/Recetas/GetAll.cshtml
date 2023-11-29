@@ -1,0 +1,71 @@
+﻿@model ML.RecetasMedicas;
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+<div class="text-lg-start">
+    <h2>Recetas Medicas</h2>
+    <h5>Listas de Recetas Medicas registrados </h5>
+</div>
+<hr />
+
+<a type="button" href="@Url.Action("Form", "Recetas")" class="btn btn-outline-success btn-lg w-25 p-3"><i class="bi bi-person-add"></i></a>
+<hr />
+<div class=" table-responsive">
+    <table class="table table-hover" id="TablaDepartamento">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Id Receta</th>
+                <th scope="col">Nombre del Paciente</th>
+                <th scope="col">Nombre del Paciente</th>
+                <th scope="col">Fecha de Consulta</th>
+                <th scope="col">Diagnostico</th>
+                <th scope="col">Nombre del Medico</th>
+                <th scope="col">Notas Adicionales </th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.RecetasMedicas medicas in Model.RecetasMdicasG)
+            {
+                <tr>
+                    <td>
+                        <a type="button" class="btn btn-outline-warning btn-lg" href="@Url.Action("Form", "Recetas", new {IdReceta = medicas.IdReceta})"><i class="bi bi-pencil-square"></i></a>
+                    </td>
+                    <td>@medicas.IdReceta</td>
+                    <td>@medicas.Paciente.IdPaciente</td>
+                    <td>@medicas.Paciente.Nombre</td>
+                    <td>@medicas.FechaDeconsultaG</td>
+                    <td>@medicas.Diagnostico</td>
+                    <td>@medicas.NombreMedico</td>
+                    <td>@medicas.NotasAdicionales</td>
+
+                    <td>
+                        <a href="@Url.Action("Delete","Recetas" , new { IdRecetas = medicas.IdReceta})" onclick="return confirm('Estas seguro de eliminar este registro');" type="button" class="btn btn-outline-danger btn-lg"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+    let table = new DataTable('#TablaDepartamento', {
+        responsive: true,
+        "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "Todos"]],
+        searching: false,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+        },
+    });
+
+</script>
+
+
+
